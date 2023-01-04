@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>Connection Speed Test</title>
+  </head>
+  <body>
+    <h1>Connection Speed Test</h1>
+    <p>This page will help you test your connection speed.</p>
+    <button onclick="startTest()">Start Test</button>
+    <div id="result"></div>
+    <script>
+      function startTest() {
+        var startTime = Date.now();
+        var file = "http://www.example.com/some-large-file.zip"; // Replace with a large file hosted on your server
+        var request = new XMLHttpRequest();
+        request.open("GET", file, true);
+        request.responseType = "arraybuffer";
+        request.onload = function() {
+          var endTime = Date.now();
+          var duration = (endTime - startTime) / 1000; // Calculate the elapsed time in seconds
+          var bytes = request.response.byteLength; // Calculate the number of bytes downloaded
+          var bitsLoaded = bytes * 8;
+          var speedBps = (bitsLoaded / duration).toFixed(2);
+          var speedKbps = (speedBps / 1024).toFixed(2);
+          var speedMbps = (speedKbps / 1024).toFixed(2);
+          var result = "Your connection speed is: " + speedMbps + " Mbps";
+          document.getElementById("result").innerHTML = result;
+        };
+        request.send();
+      }
+    </script>
+  </body>
+</html>
